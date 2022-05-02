@@ -1,4 +1,41 @@
 .wrapper{
-    height:80vh;
+    height:85vh;
     margin-top: 4%;
+    display: flex;
+    flex-direction: column;
+    align-items: center
+    
+}
+
+.text-field{
+    display: flex;
+    justify-content: center;
+    margin-top: 2%
+}
+
+.weather-display-wrapper{
+    border: 1px solid blue;
+    height: 80vh;
+    margin-top: 2%;
+    width: 80%
+}
+
+.header{
+    border: 1px solid black;
+    display: flex;
+    justify-content: space-between;
+    height: 30%;
+}
+
+.header-left{
+    height: 100%;
+    width: 30%;
+    margin-left: 2%l;
+    border: 1px solid red;
+}
+
+.header-right{
+    height: 100%;
+    width: 25%;
+    margin-right: 2%
 }

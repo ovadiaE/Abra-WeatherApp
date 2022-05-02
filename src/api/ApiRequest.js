@@ -1,8 +1,5 @@
 import axios from "axios";
 
-const key = process.env.REACT_APP_API_KEY;
-// console.log(key)
-
 export default class ApiRequest {
 
   static async fetchWeatherInfo(city, key) {
