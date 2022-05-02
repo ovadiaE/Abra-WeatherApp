@@ -7,7 +7,7 @@ const Navbar = () => {
     return (
         <div className='nav-wrapper'>
             <div> Welcome to Abra Weather App</div>
-            <nav>
+            <nav className="nav">
                 <Link to="/Homepage">HomePage</Link> | {" "} 
                 <Link to="/Favorites">Favorites</Link>
             </nav>

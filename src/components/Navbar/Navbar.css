@@ -1,5 +1,6 @@
 .nav-wrapper{
     border: 1px solid red;
     display: flex;
-    justify-content: space-between
+    justify-content: space-between;
+    height:4rem
 }

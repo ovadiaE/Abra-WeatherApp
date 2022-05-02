@@ -1,9 +1,10 @@
 .wrapper{
-    height:85vh;
+    height:75vh;
     margin-top: 4%;
     display: flex;
     flex-direction: column;
-    align-items: center
+    align-items: center;
+    border: 1px solid black
     
 }
 
@@ -30,12 +31,24 @@
 .header-left{
     height: 100%;
     width: 30%;
-    margin-left: 2%l;
-    border: 1px solid red;
+    margin-left: 2%;
+    display: flex;
+    justify-content: space-between;
+    background-color: red;
 }
+
+.image{
+    height: 100%;
+    width: 50%;
+}
+
 
 .header-right{
     height: 100%;
     width: 25%;
-    margin-right: 2%
+    margin-right: 2%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color:blue;
 }
