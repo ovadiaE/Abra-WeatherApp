@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Navbar from '../Navbar/Navbar';
 import { useDispatch, useSelector } from 'react-redux';
 import {incrementBird, addBird} from '../../store/likes/likes'
 
@@ -16,6 +17,8 @@ function Favorites () {
 
   
   return (
+    <> 
+    <Navbar/>
     <div className="wrapper">
     <h1>Bird List</h1>
     <form onSubmit={handleSubmit}>
@@ -43,6 +46,7 @@ function Favorites () {
       ))}
     </ul>
   </div>
+  </>
 );
  
 }

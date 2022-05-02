@@ -14,15 +14,17 @@ const rootElement = document.getElementById("root");
 render (
   <React.StrictMode>
     
-  <Provider store={store}> 
     
+  <Provider store={store}> 
     <BrowserRouter>
-      <Route path ="/" element={<App />}/>
+    <Routes> 
+      <Route path ="/" element={<App/>}/>
       <Route path ="Favorites" element={<Favorites/>}/>
       <Route path ="Homepage" element={<HomePage/>}/>
+    </Routes>
     </BrowserRouter>
-  
   </Provider>
+  
 
  </React.StrictMode>,
   rootElement
