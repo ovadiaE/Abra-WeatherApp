@@ -1,63 +1,33 @@
 import { combineReducers } from 'redux';
-const ADD_BIRD = 'ADD_BIRD';
-const INCREMENT_BIRD = 'INCREMENT_BIRD'
 
-export function addBird (bird) {
-    return {
-        type: ADD_BIRD,
-        bird,
-    }
-}
+const ADD_CITY= "ADD_FAVORITE"
 
-export function incrementBird(bird) {
+export function addCity(city){
+    console.log(city, 'from likes')
     return {
-      type: INCREMENT_BIRD,
-      bird
+      type: ADD_CITY,
+      city
     }
   }
 
-const defaultBirds = [
-    {
-      name: 'robin',
-      views: 1,
-    }
-  ];
+  const defaultCities = []
 
-function birds (state = defaultBirds, action) {
+function likedCities (state = defaultCities, action) {
     switch(action.type){
-        case ADD_BIRD:
-            return [
-                ...state,
-                {
-                    name: action.bird,
-                    views: 1
-                }   
-            ];
-        case INCREMENT_BIRD:
-            const bird = state.find(b => action.bird === b.name);
-            const birds = state.filter(b => action.bird !== b.name);
-       
-            console.log([
-                ...birds,
-                {
-                  ...bird,
-                  views: bird.views++
-                }
-              ])
-            return [
-              ...birds,
-              {
-                ...bird,
-                views: bird.views++
-              }
-            ];
+        case ADD_CITY:
+          return [
+            ...state,
+            {
+                name: action.city
+            }
+         ]
         default: 
             return state
     }
 }
 
-const birdApp = combineReducers({
-    birds
+const weatherApp = combineReducers({
+   likedCities
   });
 
-  export default birdApp;
+export default weatherApp;
