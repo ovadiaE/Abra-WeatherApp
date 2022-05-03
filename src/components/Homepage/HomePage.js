@@ -1,4 +1,4 @@
-import React, { useState} from 'react'
+import React, { useState, useEffect} from 'react'
 import "./HomePage.css"
 import ApiRequest from '../../api/ApiRequest'
 import Navbar from '../Navbar/Navbar'
@@ -8,48 +8,68 @@ import Button from '@mui/material/Button'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector} from 'react-redux';
 import {addCity} from '../../store/likes/likes'
 
-
 const HomePage = () => {
+    
     const dispatch = useDispatch()
+    
+    const selected = useSelector(state => state.likedCities)
+    
     const [search, setSearch] = useState('')
-    const [city, setCity] = useState('Tel Aviv')
+    
+    const [city, setCity] = useState('')
+    
     const [temp, setTemp] = useState('')
+    
     const [fiveDayForecast, setFiveDayForecast] = useState('')
-    const [weatherData, setWeatherData] = useState({})
-    const key = process.env.REACT_APP_API_KEY
-
+    
+    const [hasLoadedDefault, setHasLoadedDefault] = useState(false)
+    
     const handleLike = event => {
       event.preventDefault();
       dispatch(addCity(city))
-
+      return 
     };
     
-    const handleChange = event => (setSearch(event.target.value))
-    const handleSearch = async (event) => {
-        event.preventDefault()
-        const data = await ApiRequest.fetchWeatherInfo(search, key)
-        setWeatherData(data)
-        setCity(search)
-        setTemp(data.currentWeather.data[0].Temperature.Metric.Value)
-        setFiveDayForecast(data.fiveDayForecast.data.DailyForecasts)
-    }
+    const handleChange = event => setSearch(event.target.value)
     
-    //Functions returning the UI elements
+    const handleSearch = async (search = 'Tel Aviv') => {
+       
+        const data = await ApiRequest.fetchWeatherInfo(search)
+        
+        setCity(data.cityName)
+        
+        setTemp(data.currentWeather.data[0].Temperature.Imperial.Value)
+        
+        setFiveDayForecast(data.fiveDayForecast.data.DailyForecasts)
 
+        return data
+    }
+
+    useEffect(() => {
+        if(!hasLoadedDefault){
+            
+            handleSearch(selected[0])
+            
+            setHasLoadedDefault(true)
+            return
+        } 
+    },[])
+    
+    //functions to return UI elements
     const searchField = () => (
         <div className="text-field"> 
             <TextField id="outlined-basic" label="Search" variant="outlined" onChange={handleChange} />
-            <Button variant="outlined" onClick={handleSearch}>search</Button>
+            <Button variant="outlined" onClick={ (event) => { event.preventDefault(); handleSearch(search) }}>search</Button>
         </div>
     )
 
     const weatherDisplayHeader = () => ( 
             <div className="header">
                 <div className="header-left">
-                    <span className="image">Image</span>
+                    <span className="image">{Image}</span>
                     <span className="text">{city} {temp}</span>
                 </div>
             
@@ -74,7 +94,7 @@ const HomePage = () => {
                             </CardContent>
                         </Card>
                     )
-                }): null} 
+                }) : null } 
             </div>
         )
     }
