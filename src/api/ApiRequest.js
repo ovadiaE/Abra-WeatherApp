@@ -22,7 +22,8 @@ export default class ApiRequest {
     } 
     
     catch (error) {
-      console.log(error)
+      const data = error.name
+      return data
     }
  }
 
@@ -69,7 +70,6 @@ async function fetchFiveDayForecast (locationKey, key) {
   }
 
   async function fetchCurrentWeather (locationKey, key){
-    
     try {
       const response = await axios.get(`http://dataservice.accuweather.com/currentconditions/v1/${locationKey}?apikey=${key}`)
       const data = await response

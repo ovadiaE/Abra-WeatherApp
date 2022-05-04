@@ -6,32 +6,42 @@ import moment from 'moment'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import FavoriteIcon from '@mui/icons-material/Favorite'
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import { useDispatch, useSelector} from 'react-redux';
-import {addCity} from '../../store/likes/likes'
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
+import { useDispatch, useSelector} from 'react-redux'
+import {addCity, removeCity} from '../../store/likes/likes'
 
 const HomePage = () => {
     
     const dispatch = useDispatch()
     
-    const selected = useSelector(state => state.likedCities)
+    const selected = useSelector(state => state.selectedCities)
+    const likedCities = useSelector (state => state.likedCities)
     
     const [search, setSearch] = useState('')
+
+    const [requestFailed, setRequestFailed] = useState(false)
+   
+    const [hasLoadedDefault, setHasLoadedDefault] = useState(false)
     
     const [city, setCity] = useState('')
+
+    const [text, setText] = useState('')
     
     const [temp, setTemp] = useState('')
     
     const [fiveDayForecast, setFiveDayForecast] = useState('')
-    
-    const [hasLoadedDefault, setHasLoadedDefault] = useState(false)
     
     const handleLike = event => {
       event.preventDefault();
       dispatch(addCity(city))
       return 
     };
+
+    const handleRemove = event => {
+        event.preventDefault();
+        dispatch(removeCity(city))
+        return 
+      };
     
     const handleChange = event => setSearch(event.target.value)
     
@@ -39,60 +49,78 @@ const HomePage = () => {
        
         const data = await ApiRequest.fetchWeatherInfo(search)
         
+        if(typeof data === 'string'){
+            setRequestFailed(true)
+            return
+        }
+        setRequestFailed(false)
+        
         setCity(data.cityName)
         
         setTemp(data.currentWeather.data[0].Temperature.Imperial.Value)
+
+        setText(data.currentWeather.data[0].WeatherText)
         
         setFiveDayForecast(data.fiveDayForecast.data.DailyForecasts)
-
         return data
     }
 
     useEffect(() => {
         if(!hasLoadedDefault){
-            
             handleSearch(selected[0])
-            
             setHasLoadedDefault(true)
-            return
         } 
-    },[])
+    },[]) 
     
     //functions to return UI elements
     const searchField = () => (
         <div className="text-field"> 
             <TextField id="outlined-basic" label="Search" variant="outlined" onChange={handleChange} />
-            <Button variant="outlined" onClick={ (event) => { event.preventDefault(); handleSearch(search) }}>search</Button>
+            <Button variant="outlined" 
+                onClick={ (event) => { event.preventDefault(); handleSearch(search) }}> 
+                search 
+            </Button>
         </div>
     )
 
-    const weatherDisplayHeader = () => ( 
+    const displayError = () => (
+        <div>error baby</div>
+    )
+
+    const weatherDisplayHeader = () => { 
+        return ( 
             <div className="header">
                 <div className="header-left">
-                    <span className="image">{Image}</span>
-                    <span className="text">{city} {temp}</span>
+                    <span className="text">{city} : {temp} F </span>
                 </div>
-            
-                <div className="header-right">
-                    <Button variant="text" onClick={handleLike}><FavoriteIcon/></Button>
-                    <span>Add to favorites</span>
-                </div>
+                { likedCities.indexOf(city) < 0 ?  
+                    <div className="header-right">
+                        <Button variant="text" onClick={handleLike}><FavoriteBorderIcon/></Button>
+                    </div> :  
+                    
+                    <div className="header-right">
+                        <Button variant="text" onClick={handleRemove}><FavoriteIcon/></Button>
+                    </div> 
+                }
             </div>
+        )
+    }
+
+    const textDisplay = () => (
+        <div className='text-display'>
+            {text}
+        </div>
     )
 
     const weatherDisplayBody = () => {
         return (
             <div className='weather-display-grid'>
-                { fiveDayForecast.length === 5 ? fiveDayForecast.map((element) => {
+                { fiveDayForecast.length  ? fiveDayForecast.map((element) => {
                     return ( 
-                        <Card key={element.Date}>
-                            <CardContent>
-                                {element.Temperature.Maximum.Value}
-                            </CardContent>
-                            <CardContent>
-                                {moment(element.Date).format('dddd')}
-                            </CardContent>
-                        </Card>
+                        <div className="card" key={element.Date}>
+                            <span className="first">{element.Temperature.Maximum.Value} F </span>
+                            <span className="second">{moment(element.Date).format('dddd')}</span> 
+                        </div>
                     )
                 }) : null } 
             </div>
@@ -104,10 +132,13 @@ const HomePage = () => {
         <Navbar/>
         <div className="homepage-wrapper">
             {searchField()}
-            <div className='weather-display-wrapper'>
-                {weatherDisplayHeader()}
-                {weatherDisplayBody()}
-            </div>
+            {!requestFailed ?   
+                <div className='weather-display-wrapper'>
+                    {weatherDisplayHeader()}
+                    {textDisplay()}
+                    {weatherDisplayBody()}
+                </div> :
+                displayError()}
         </div>
     </>
    )

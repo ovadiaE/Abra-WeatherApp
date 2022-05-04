@@ -11,6 +11,7 @@ import HomePage from './components/Homepage/HomePage'
 const store = createStore(weatherApp)
 
 const rootElement = document.getElementById("root");
+
 render (
   <React.StrictMode>
     <Provider store={store}> 
