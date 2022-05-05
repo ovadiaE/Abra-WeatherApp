@@ -60,6 +60,20 @@ static async fetchCityImage (city) {
   return data
 }
 
+static async fetchLikedCityImages (likes) {
+  let likedCityImages = []
+  for(let i = 0; i < likes.length; i++){
+    const response = 
+    await axios.get(`https://api.unsplash.com/search/photos?&query=${likes[i]}&client_id=rZo00pgfVSBHngotZDZxM0FPyBMYASuH4Zm_IrZjaJs`)
+    const data = await response
+
+    likedCityImages.push(data.data.results[0].urls.regular)
+  }
+
+  return likedCityImages
+
+}
+
 }
   
 async function fetchFiveDayForecast (locationKey, key) {

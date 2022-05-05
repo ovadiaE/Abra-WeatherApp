@@ -84,9 +84,11 @@ const App = () => {
     useEffect(()=> {
         const fetchImage = async () => {
             const data = await ApiRequest.fetchCityImage(city)
-            console.log(data.data.results[0].urls.regular)
-            setImage(data.data.results[0].urls.regular)
-            return 
+            if(data){
+                setImage(data?.data?.results[0]?.urls?.regular)
+                return 
+            }
+            return
         }
         fetchImage(city)
     },[city])
