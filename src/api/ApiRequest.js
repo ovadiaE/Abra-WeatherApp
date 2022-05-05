@@ -7,7 +7,7 @@ export default class ApiRequest {
     const key  = process.env.REACT_APP_API_KEY
     
     try {
-      const response = await axios.get(`http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${key}&q=${city}`)
+      const response = await axios.get(`https://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${key}&q=${city}`)
       const data = await response
       
       const locationKey = data.data[0].Key
@@ -33,7 +33,7 @@ export default class ApiRequest {
   for (let i = 0; i < likes.length; i++) {
     
     try {
-      const response = await axios.get(`http://dataservice.accuweather.com/locations/v1/cities/search?apikey=${key}&q=${likes[i]}`)
+      const response = await axios.get(`https://dataservice.accuweather.com/locations/v1/cities/search?apikey=${key}&q=${likes[i]}`)
       const data = await response
       
       const locationKey = data.data[0].Key
@@ -57,7 +57,7 @@ export default class ApiRequest {
 async function fetchFiveDayForecast (locationKey, key) {
     
   try {
-      const response = await axios.get(`http://dataservice.accuweather.com/forecasts/v1/daily/5day/${locationKey}?apikey=${key}`)
+      const response = await axios.get(`https://dataservice.accuweather.com/forecasts/v1/daily/5day/${locationKey}?apikey=${key}`)
       const data = await response
       
       return data
@@ -70,7 +70,7 @@ async function fetchFiveDayForecast (locationKey, key) {
 
   async function fetchCurrentWeather (locationKey, key){
     try {
-      const response = await axios.get(`http://dataservice.accuweather.com/currentconditions/v1/${locationKey}?apikey=${key}`)
+      const response = await axios.get(`https://dataservice.accuweather.com/currentconditions/v1/${locationKey}?apikey=${key}`)
       const data = await response
       return data
     } 
