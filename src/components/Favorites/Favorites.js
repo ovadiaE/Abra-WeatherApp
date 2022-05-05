@@ -33,7 +33,7 @@ function Favorites () {
       { data.length ? data.map((element) => {
         return ( 
           <div className = 'favorites-card' key={element.city} onClick = {(event) => {event.preventDefault(); dispatch(selectCity(element.city))}}>
-            <Link className='favorites-link' to="/Homepage">
+            <Link className='favorites-link' to="/">
               <span className='favorites-first'> {element.city} </span>
               <span className='favorites-second'> {element.text} </span>
               <span className='favorites-third'> {element.temp}F </span>

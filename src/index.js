@@ -6,7 +6,6 @@ import { createStore } from 'redux';
 import weatherApp from './store/likes/likes'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Favorites from './components/Favorites/Favorites'
-import HomePage from './components/Homepage/HomePage'
 
 const store = createStore(weatherApp)
 
@@ -19,7 +18,6 @@ render (
         <Routes> 
             <Route path ="/" element={<App/>}/>
             <Route path ="Favorites" element={<Favorites/>}/>
-            <Route path ="Homepage" element={<HomePage/>}/>
         </Routes>
       </BrowserRouter>
     </Provider>

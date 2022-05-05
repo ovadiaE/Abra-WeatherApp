@@ -8,7 +8,7 @@ const Navbar = () => {
         <div className='nav-wrapper'>
             <div> Welcome to Abra Weather Assignment</div>
             <nav className="nav">
-                <Link className="link" to="/Homepage">HomePage</Link> | {" "} 
+                <Link className="link" to="/">HomePage</Link> | {" "} 
                 <Link className="link" to="/Favorites">Favorites</Link>
             </nav>
         </div>
