@@ -52,6 +52,14 @@ export default class ApiRequest {
   
   return likedCityWeather
 }
+
+static async fetchCityImage (city) {
+  const response = 
+  await axios.get(`https://api.unsplash.com/search/photos?&query=${city}&client_id=rZo00pgfVSBHngotZDZxM0FPyBMYASuH4Zm_IrZjaJs`)
+  const data = await response
+  return data
+}
+
 }
   
 async function fetchFiveDayForecast (locationKey, key) {

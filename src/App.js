@@ -20,6 +20,8 @@ const App = () => {
 
     const [loading, setLoading] = useState(false)
     
+    const [image, setImage] = useState('')
+    
     const [search, setSearch] = useState('')
    
     const [city, setCity] = useState('')
@@ -78,6 +80,16 @@ const App = () => {
             setHasLoadedDefault(true)
         } 
     },[]) // eslint-disable-line
+
+    useEffect(()=> {
+        const fetchImage = async () => {
+            const data = await ApiRequest.fetchCityImage(city)
+            console.log(data.data.results[0].urls.regular)
+            setImage(data.data.results[0].urls.regular)
+            return 
+        }
+        fetchImage(city)
+    },[city])
     
     //functions to return UI elements
     const searchField = () => (
@@ -149,7 +161,10 @@ const App = () => {
     return (
     <> 
         <Navbar/>
-        <div className="homepage-wrapper">
+        <div className="homepage-wrapper" style={{ 
+      backgroundImage: `url(${image})` 
+    }}>
+
             {searchField()}
             {displayLogic()}
         </div>
