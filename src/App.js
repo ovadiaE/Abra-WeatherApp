@@ -133,7 +133,6 @@ const App = () => {
     }
 
     const displayLogic = () => {
-        
         if (!loading && !requestFailed) {
             return (
                 <div className='weather-display-wrapper'>
@@ -143,9 +142,7 @@ const App = () => {
                 </div>
             )
         }
-       
         else if (!loading && requestFailed) { return ( <ErrorModal/> ) }
-       
         return ( <CircularProgress /> ) 
     }
     
