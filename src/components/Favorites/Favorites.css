@@ -1,7 +1,7 @@
-.wrapper{
-    margin-top: 5%;
-    display: flex;
+.wrapper{   
+     display: flex;
     justify-content: space-evenly;
+    align-items: center;
     flex-wrap: wrap;
     height: 100vh;
     word-wrap:break-word;

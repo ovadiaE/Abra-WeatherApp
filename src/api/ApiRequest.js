@@ -1,6 +1,5 @@
 import axios from "axios";
 
-
 export default class ApiRequest {
 
   static async fetchWeatherInfo(city) {

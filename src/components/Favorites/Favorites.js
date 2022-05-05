@@ -24,9 +24,8 @@ function Favorites () {
   };
   
   useEffect(() => {
-     console.log(likes)
      getLikedCitiesWeather(likes)
-  },[])
+  },[]) // eslint-disable-line
 
   const weatherDisplayBody = () => {
     return (

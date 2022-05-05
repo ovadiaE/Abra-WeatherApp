@@ -3,6 +3,7 @@ import { combineReducers } from 'redux';
 const ADD_CITY= "ADD_FAVORITE"
 const SELECT_CITY = "SELECT_CITY"
 const REMOVE_CITY = "REMOVE_CITY"
+
 let cities = []
 let selectedCity = []
 
@@ -35,12 +36,11 @@ function likedCities (state = cities, action) {
           cities.push(action.city)
           cities = cities.filter((item, index) => cities.indexOf(item) === index);
           return cities
-          break 
+           
       case REMOVE_CITY:
-       cities = cities.filter((item) =>  item !== action.city)
-       return cities
-       break
-             
+        cities = cities.filter((item) =>  item !== action.city)
+        return cities
+        
       default: 
         return state
     }
